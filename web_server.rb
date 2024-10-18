@@ -1,4 +1,5 @@
 require 'socket'
+require_relative './lib/parser.rb'
 
 server_socket = TCPServer.new(12000)
 
@@ -9,7 +10,8 @@ while true
   Thread.start(server_socket.accept) do |connection_socket|
     begin
       message = connection_socket.recv(1024)
-      filename = message.split[1]
+      parsed_message = Parser.new(message)
+      filename = parsed_message.message[:path]
       f = File.open('.' + filename)
     rescue Errno::ENOENT
       connection_socket.puts "HTTP/1.1 404 Not Found\r\n\r\n"

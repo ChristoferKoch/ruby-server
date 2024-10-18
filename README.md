@@ -3,10 +3,16 @@ A simple server written in Ruby.
 
 What needs to be done:
 
-- [x] Serve simple HTML files
-- [x] Handle 404 errors
+- [x] Serve files
+- [ ] Handle Errors
+  - [x] 404
+  - [ ] Others (will update when developing error handling)
 - [x] Multithreading
-- [ ] Serve video
-- [ ] Parse headers
+- [ ] Handle headers
+  - [x] Parse headers
+  - [ ] Check file language
+  - [ ] Accept types
+  - [ ] Cache control
+- [ ] POST parsing
 
 This was inspired by the Python 3 Socket Programming Assignments found in *Computer Networking: A Top-Down Approach* by James F. Kurose and Keith W. Ross.

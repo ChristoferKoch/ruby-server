@@ -1,31 +1,48 @@
 class Response
-  attr_reader :response
-  # Incomplete list. Update as errors are dealt with.
-  RESPONSE_CODES = {
-    200: "OK",
-    201: "Created",
-    301: "Moved Permanently",
-    302: "Found",
-    304: "Not Modified",
-    307: "Temporary Redirect",
-    308: "Permanent Redirect",
-    400: "Bad Request",
-    401: "Unauthorized",
-    402: "Payment Required",
-    403: "Forbidden",
-    404: "Not Found",
-    500: "Internal Server Error"
-  }
-
+  attr_reader :message
+  
   def initialize(file_path)
-    code, message = get_response_code(file_path)
-    output_data = code == :200 ? File.binread(file_path) + "\r\n" : ""
-    @response = "HTTP/1.1 #{code} #{message}\r\n\r\n#{output_data}"
+    code, status_message = get_response_code(file_path)
+    output_data = code == 200 ? File.binread(file_path) + "\r\n" : ""
+    @message = "HTTP/1.1 #{code} #{status_message}\r\n\r\n#{output_data}"
   end
 
   def get_response_code(path)
-    code = File.exists?(path) ? :200 : :404
-    message = RESPONSE_CODES[code]
+    code = File.exist?(path) ? 200 : 404
+    message = get_response_message(code)
     [code, message]
+  end
+
+  def get_response_message(code)
+    # Incomplete list. Update as errors are dealt with.
+    message =
+      case code
+      when 200
+        "OK"
+      when 201
+        "Created"
+      when 301
+        "Moved Permanently"
+      when 302
+        "Found"
+      when 304
+        "Not Modified"
+      when 307
+        "Temporary Redirect"
+      when 308
+        "Permanent Redirect"
+      when 400
+        "Bad Request"
+      when 401
+        "Unauthorized"
+      when 402
+        "Payment Required"
+      when 403
+        "Forbidden"
+      when 404
+        "Not Found"
+      when 500
+        "Internal Server Error"
+      end
   end
 end

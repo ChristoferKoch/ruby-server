@@ -1,6 +1,7 @@
 require 'socket'
 require_relative './lib/parser.rb'
 
+ROOT = '~/repos/ruby-server/files/'
 server_socket = TCPServer.new(12000)
 
 server_socket.listen(1)
@@ -10,9 +11,9 @@ while true
   Thread.start(server_socket.accept) do |connection_socket|
     begin
       message = connection_socket.recv(1024)
-      parsed_message = Parser.new(message)
-      filename = parsed_message.message[:path]
-      f = File.open('.' + filename)
+      parsed = Parser.new(message)
+      filename = parsed.message[:path] == "/" ? ROOT + "index.html" : ROOT + parsed.message[:path]
+      response = Response.new(filename)
     rescue Errno::ENOENT
       connection_socket.puts "HTTP/1.1 404 Not Found\r\n\r\n"
     else

@@ -13,6 +13,6 @@ What needs to be done:
   - [ ] Check file language
   - [ ] Accept types
   - [ ] Cache control
-- [ ] POST parsing
+  - [ ] POST parsing
 
 This was inspired by the Python 3 Socket Programming Assignments found in *Computer Networking: A Top-Down Approach* by James F. Kurose and Keith W. Ross.

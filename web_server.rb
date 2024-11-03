@@ -5,8 +5,6 @@ require_relative './lib/response.rb'
 ROOT = './files'
 server_socket = TCPServer.new(12000)
 
-server_socket.listen(1)
-
 while true
   puts "Ready to serve..."
   Thread.start(server_socket.accept) do |connection_socket|
